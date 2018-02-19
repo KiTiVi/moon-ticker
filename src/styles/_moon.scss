@@ -1,0 +1,47 @@
+.moon-component {
+  position: absolute;
+  border-radius: 50%;
+  background: #c7cbd1;
+  border: 2px solid #788999;
+  box-shadow: inset -50px 0px 0px 0px #a4a3a8;
+
+  .moon-body {
+    position: relative;
+    height: 100%;
+    .crater {
+      position: absolute;
+      background: #747379;
+      border-radius: 50%;
+      &.large {
+        width: 20%;
+        height: 20%;
+        box-shadow: inset 12px -2px 0px 0px #404040;
+      }
+      &.medium {
+        width: 12%;
+        height: 12%;
+        box-shadow: inset 7px -2px 0px 0px #404040;
+      }
+      &.small {
+        width: 5%;
+        height: 5%;
+        box-shadow: inset 4px -2px 0px 0px #404040;
+      }
+    }
+  }
+  &.is-animated {
+    animation: moon-wiggle 4s infinite ease-in-out;
+  }
+}
+
+@keyframes moon-wiggle {
+  0% {
+    transform: translateY(15px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(15px);
+  }
+}
