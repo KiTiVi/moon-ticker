@@ -16,7 +16,7 @@ class App extends Component {
           size={550}
           position={{
             top: 100,
-            left: `${window.innerWidth - 275}px`
+            left: `${window.innerWidth - 975}px`
           }}
         />
         <Background />

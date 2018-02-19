@@ -32,6 +32,9 @@
   &.is-animated {
     animation: moon-wiggle 4s infinite ease-in-out;
   }
+  &.is-easter-egg {
+    animation: easter-egg-animation 30s linear;
+  }
 }
 
 @keyframes moon-wiggle {
@@ -43,5 +46,20 @@
   }
   100% {
     transform: translateY(15px);
+  }
+}
+
+@keyframes easter-egg-animation {
+  0% {
+    transform: translateY(25px);
+    transform: scale(1.1);
+  }
+  25% {
+    transform: rotate3d(45, 0, 0, 900deg) rotate(980deg) scale(0.01)
+      translateY(-25px);
+  }
+  100% {
+    transform: rotate3d(45, 0, 0, 900deg) rotate(980deg) scale(0.00001)
+      translateY(-25px);
   }
 }
