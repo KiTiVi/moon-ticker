@@ -13,10 +13,10 @@ class App extends Component {
         </header>
         <Moon
           animated
-          size={350}
+          size={550}
           position={{
             top: 100,
-            left: 100
+            left: `${window.innerWidth - 275}px`
           }}
         />
         <Background />
