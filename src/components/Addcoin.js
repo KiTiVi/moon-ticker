@@ -1,28 +1,10 @@
 import React, { Component } from 'react'
 import '../styles/App.css'
 
-import Background from './Background'
-import Moon from './Moon'
-
-class App extends Component {
+class AddCoin extends Component {
   render() {
-    return (
-      <div className="App">
-        <header>
-          <h1>ADDA MASSA COINS FFS</h1>
-        </header>
-        <Moon
-          animated
-          size={550}
-          position={{
-            top: 100,
-            left: `${window.innerWidth - 975}px`
-          }}
-        />
-        <Background />
-      </div>
-    )
+    return <div className="add-coin">add coin</div>
   }
 }
 
-export default App
+export default AddCoin

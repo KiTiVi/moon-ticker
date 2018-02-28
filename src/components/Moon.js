@@ -132,6 +132,8 @@ const MoonWrapper = styled.figure.attrs({
   background: #c7cbd1;
   border: 2px solid #788999;
   box-shadow: inset -50px 0px 0px 0px #a4a3a8;
+  transition: 1s all ease;
+  margin: 0;
   animation: ${({ animated, easterEgg }) =>
     easterEgg
       ? `${easterEggAnimation} 30s linear`
@@ -147,6 +149,7 @@ const Crater = styled.div.attrs({
     left: position.left
   })
 })`
+  transition: 1s all ease;
   position: absolute;
   background: #747379;
   border-radius: 50%;

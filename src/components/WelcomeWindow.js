@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const WelcomeWindow = () => {
   return (
@@ -9,6 +10,7 @@ const WelcomeWindow = () => {
         PLACEHODLER MASSA PLACEHODLER MASSA PLACEHODLER MASSA PLACEHODLER MASSA
         PLACEHODLER MASSA PLACEHODLER MASSA PLACEHODLER MASSA PLACEHODLER{' '}
       </p>
+      <Link to="/addcoin">Add coin</Link>
     </div>
   )
 }
