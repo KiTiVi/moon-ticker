@@ -7,7 +7,7 @@ class Moon extends Component {
 
   componentDidMount() {
     if (this.props.animated) {
-      this.setState({ size: 1 })
+      this.setState({ size: 50 })
       if (this.state.size <= this.props.size) {
         const moonFlight = setInterval(() => {
           if (this.state.size >= this.props.size)
@@ -106,12 +106,7 @@ class Moon extends Component {
 Moon.propTypes = {
   animated: PropTypes.bool,
   size: PropTypes.number.isRequired,
-  position: PropTypes.shape({
-    top: PropTypes.number,
-    bottom: PropTypes.number,
-    left: PropTypes.number,
-    right: PropTypes.number
-  }).isRequired
+  position: PropTypes.object.isRequired
 }
 
 export default Moon

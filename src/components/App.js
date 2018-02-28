@@ -13,42 +13,44 @@ import Moon from './Moon'
 class App extends Component {
   state = {
     moonPosition: {
-      top: 100,
-      left: 600
+      top: '',
+      left: ''
     }
   }
   componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
-
+    this.setMoonPosition(this.props.location.pathname)
     this.props.history.listen((location, action) => {
-      console.log(location.pathname)
-      switch (location.pathname) {
-        case '/welcome':
-          this.setState({
-            moonPosition: {
-              top: 80,
-              left: 'calc(100vw - 800px)'
-            }
-          })
-          break
-        case '/addcoin':
-          this.setState({
-            moonPosition: {
-              top: 'calc(50vh)',
-              left: 100
-            }
-          })
-          break
-        default:
-          this.setState({
-            moonPosition: {
-              top: 'calc(50vh - 310px)',
-              left: 'calc(100vw - 210px)'
-            }
-          })
-          break
-      }
+      this.setMoonPosition(location.pathname)
     })
+  }
+  setMoonPosition = path => {
+    switch (path) {
+      case '/welcome':
+        this.setState({
+          moonPosition: {
+            top: 80,
+            left: 'calc(100vw - 800px)'
+          }
+        })
+        break
+      case '/addcoin':
+        this.setState({
+          moonPosition: {
+            top: 'calc(50vh)',
+            left: 100
+          }
+        })
+        break
+      default:
+        this.setState({
+          moonPosition: {
+            top: 'calc(50vh - 310px)',
+            left: 'calc(100vw - 210px)'
+          }
+        })
+        break
+    }
   }
   render() {
     return (
