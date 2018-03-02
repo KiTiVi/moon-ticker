@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import '../styles/App.css'
 import { Route, Switch, NavLink } from 'react-router-dom'
+import axios from 'axios'
 import Responsive from 'react-responsive'
 
+import '../styles/App.css'
 import { mobile_max, desktop_min } from '../helpers/mediaQueries'
 
 import Welcome from './Welcome'
@@ -15,14 +16,49 @@ class App extends Component {
     moonPosition: {
       top: '',
       left: ''
-    }
+    },
+    coinData: null
   }
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
     this.setMoonPosition(this.props.location.pathname)
     this.props.history.listen((location, action) => {
       this.setMoonPosition(location.pathname)
     })
+    this.checkLocalStorage()
+  }
+  checkLocalStorage = async () => {
+    var persistedCoinData = JSON.parse(localStorage.getItem('moon-coin-data'))
+    if (persistedCoinData) {
+      this.refreshCoinData(persistedCoinData)
+    } else {
+      const { data } = await this.fetchCoinmarketCap()
+      console.log('in checkLocalStorage:', data)
+      this.persistCoinData(data)
+    }
+  }
+  refreshCoinData = persistedCoinData => {
+    this.setState({ coinData: persistedCoinData }, async () => {
+      if (new Date().getTime() >= this.state.coinData.timeStamp + 60000 * 5) {
+        console.log('new date greater than old')
+        let { data } = await this.fetchCoinmarketCap()
+        this.persistCoinData(data)
+        console.log('Data: ' + data)
+      }
+    })
+  }
+  fetchCoinmarketCap = async () => {
+    try {
+      console.log('fetching coin data')
+      return await axios.get('https://api.coinmarketcap.com/v1/ticker/')
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+  persistCoinData = coinData => {
+    const coinDataWithTime = { timeStamp: new Date().getTime(), ...coinData }
+    this.setState({ coinData: coinDataWithTime })
+    localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
   setMoonPosition = path => {
     switch (path) {
