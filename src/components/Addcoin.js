@@ -38,10 +38,11 @@ const AddCoinContainer = styled.div`
 `
 
 const CoinList = styled.ul`
-  background-color: gray;
-  max-height: 40vh;
-  width: 550px;
+  background-color: rgba(28, 63, 75, 0.85);
+  border: 4px solid #32515c;
+  border-radius: 5px;
+  width: 650px;
   overflow-y: auto;
-  padding: 5px;
+  padding: 20px 35px;
 `
 const TableBody = styled.tbody``
