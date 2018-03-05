@@ -10,6 +10,7 @@ import Welcome from './Welcome'
 import AddCoin from './AddCoin'
 import Background from './Background'
 import Moon from './Moon'
+import Header from './Header'
 
 class App extends Component {
   state = {
@@ -117,12 +118,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <h1>Welcome to Grupparbete</h1>
-          <NavLink to="/">home</NavLink>
-          <NavLink to="/welcome">Welcome</NavLink>
-          <NavLink to="/addcoin">Add coin</NavLink>
-        </header>
+        <Header />
+        <NavLink to="/">home</NavLink>
+        <NavLink to="/welcome">Welcome</NavLink>
+        <NavLink to="/addcoin">Add coin</NavLink>
         <Switch>
           <Route path="/welcome" render={() => <Welcome />} />
           <Route
