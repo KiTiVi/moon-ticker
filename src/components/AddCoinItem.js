@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 class AddCoinItem extends Component {
   state = {
-    value: null,
+    value: '',
     error: null
   }
 
   handleSubmit = e => {
     const { price_usd, name } = this.props.coin
     e.preventDefault()
-    if (this.state.value === null) {
+    if (this.state.value === '') {
       return this.setState({
         error: 'Please provide a value'
       })
@@ -22,15 +22,13 @@ class AddCoinItem extends Component {
     }
 
     // Validation complete - lets submit! :)
-    alert(this.state.value)
+    this.props.onAddCoin(this.props.coin, this.state.value)
+    this.setState({ value: '' })
   }
 
   handleChange = e => {
     const input = e.target.value
-    this.setState({ value: input })
-    if (input == '') {
-      this.setState({ error: null })
-    }
+    this.setState({ value: input, error: null })
   }
 
   render() {
@@ -38,12 +36,14 @@ class AddCoinItem extends Component {
 
     return (
       <CoinRow>
-        <CoinIcon>HEJ</CoinIcon>
+        <CoinIcon>
+          <CoinImage src={'/assets/bitcoin.png'} alt="icon" />
+        </CoinIcon>
         <CoinName>{name}</CoinName>
         <CoinPrice>${price_usd}</CoinPrice>
         <CoinInput>
           <form onSubmit={this.handleSubmit}>
-            <input
+            <CoinInputField
               type="number"
               value={this.state.value}
               onChange={this.handleChange}
@@ -51,11 +51,9 @@ class AddCoinItem extends Component {
               required
             />
           </form>
-          <button onClick={this.handleSubmit}>ADD</button>
-          {this.state.error ? <div>{this.state.error}</div> : null}
+          <CoinButton onClick={this.handleSubmit}>ADD</CoinButton>
+          {this.state.error && <ErrorWrapper>{this.state.error}</ErrorWrapper>}
         </CoinInput>
-
-        <td />
       </CoinRow>
     )
   }
@@ -63,22 +61,46 @@ class AddCoinItem extends Component {
 
 export default AddCoinItem
 
-const CoinRow = styled.tr`
-  display: flex;
-  width: 100%;
+const CoinRow = styled.li`
   height: 50px;
-`
-const CoinIcon = styled.figure`
-  width: 20%;
-  margin: 0;
-`
-const CoinName = styled.td`
-  width: 20%;
-`
-const CoinPrice = styled.td`
-  width: 20%;
-`
-const CoinInput = styled.td`
   display: flex;
-  width: 40%;
+  align-items: center;
+  padding: 5px 0;
+`
+const CoinIcon = styled.div`
+  width: 15%;
+  height: 100%;
+`
+const CoinImage = styled.img`
+  height: 100%;
+`
+const CoinName = styled.div`
+  width: 20%;
+`
+const CoinPrice = styled.div`
+  width: 20%;
+`
+const CoinInput = styled.div`
+  display: flex;
+  height: 100%;
+  position: relative;
+`
+const CoinInputField = styled.input`
+  height: 100%;
+  border: 0;
+`
+const CoinButton = styled.button`
+  height: 100%;
+  min-width: 100px;
+  background: #0dadd2;
+  border: 0;
+  cursor: pointer;
+`
+const ErrorWrapper = styled.div`
+  position: absolute;
+  z-index: 99999;
+  top: 40px;
+  padding: 10px;
+  background: red;
+  border-radius: 10px;
 `

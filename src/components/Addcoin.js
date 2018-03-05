@@ -11,23 +11,20 @@ class AddCoin extends Component {
     return this.props.coinData
       .filter(coin => VALID_COINS.includes(coin.name))
       .map(coin => {
-        return <AddCoinItem coin={coin} key={coin.id} />
+        return (
+          <AddCoinItem
+            onAddCoin={this.props.onAddCoin}
+            coin={coin}
+            key={coin.id}
+          />
+        )
       })
   }
 
   render() {
     return (
       <AddCoinContainer>
-        <Table>
-          <thead>
-            <tr>
-              {/* {<th>Name</th>
-              <th>Value</th>
-              <th>Moon target</th>} */}
-            </tr>
-          </thead>
-          <TableBody>{this.renderTableRows()}</TableBody>
-        </Table>
+        <CoinList>{this.renderTableRows()}</CoinList>
       </AddCoinContainer>
     )
   }
@@ -40,14 +37,11 @@ const AddCoinContainer = styled.div`
   justify-content: center;
 `
 
-const Table = styled.table`
-  display: block;
-  background-color: #f00;
-  height: 70vh;
+const CoinList = styled.ul`
+  background-color: gray;
+  max-height: 40vh;
   width: 550px;
   overflow-y: auto;
+  padding: 5px;
 `
-const TableBody = styled.tbody`
-  display: flex;
-  flex-wrap: wrap;
-`
+const TableBody = styled.tbody``

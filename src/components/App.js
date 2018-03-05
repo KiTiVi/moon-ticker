@@ -20,7 +20,8 @@ class App extends Component {
     coinData: {
       timestamp: null,
       data: []
-    }
+    },
+    myCoins: []
   }
   async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
@@ -95,6 +96,24 @@ class App extends Component {
         break
     }
   }
+  onAddCoin = (coin, moonTarget) => {
+    console.log('TACK FÖR COINET', coin, moonTarget)
+    let newMyCoins = this.state.myCoins.filter(
+      coinItem => coinItem.id !== coin.id
+    )
+    if (
+      this.state.myCoins.filter(coinItem => coinItem.id === coin.id).length > 0
+    ) {
+      newMyCoins.push({ ...coin, moonTarget })
+      this.setState(prevState => ({
+        myCoins: newMyCoins
+      }))
+    } else {
+      this.setState(prevState => ({
+        myCoins: [...prevState.myCoins, { ...coin, moonTarget }]
+      }))
+    }
+  }
   render() {
     return (
       <div className="App">
@@ -108,7 +127,12 @@ class App extends Component {
           <Route path="/welcome" render={() => <Welcome />} />
           <Route
             path="/addcoin"
-            render={() => <AddCoin coinData={this.state.coinData.data} />}
+            render={() => (
+              <AddCoin
+                coinData={this.state.coinData.data}
+                onAddCoin={this.onAddCoin}
+              />
+            )}
           />
         </Switch>
         <Moon animated size={550} position={this.state.moonPosition} />
