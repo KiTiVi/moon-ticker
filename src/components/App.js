@@ -17,7 +17,10 @@ class App extends Component {
       top: '',
       left: ''
     },
-    coinData: null
+    coinData: {
+      timestamp: null,
+      data: []
+    }
   }
   async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
@@ -39,7 +42,7 @@ class App extends Component {
   }
   refreshCoinData = persistedCoinData => {
     this.setState({ coinData: persistedCoinData }, async () => {
-      if (new Date().getTime() >= this.state.coinData.timeStamp + 60000 * 5) {
+      if (new Date().getTime() >= this.state.coinData.timestamp + 60000 * 5) {
         console.log('new date greater than old')
         let { data } = await this.fetchCoinmarketCap()
         this.persistCoinData(data)
@@ -56,7 +59,11 @@ class App extends Component {
     }
   }
   persistCoinData = coinData => {
-    const coinDataWithTime = { timeStamp: new Date().getTime(), ...coinData }
+    const coinDataWithTime = {
+      timestamp: new Date().getTime(),
+      data: [...coinData]
+    }
+    console.log(coinDataWithTime)
     this.setState({ coinData: coinDataWithTime })
     localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
@@ -99,7 +106,10 @@ class App extends Component {
         </header>
         <Switch>
           <Route path="/welcome" render={() => <Welcome />} />
-          <Route path="/addcoin" render={() => <AddCoin />} />
+          <Route
+            path="/addcoin"
+            render={() => <AddCoin coinData={this.state.coinData.data} />}
+          />
         </Switch>
         <Moon animated size={550} position={this.state.moonPosition} />
         <Background />
