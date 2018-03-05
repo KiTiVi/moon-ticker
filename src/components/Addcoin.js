@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import '../styles/App.css'
+
 import AddCoinItem from './AddCoinItem'
+
+import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
 const VALID_COINS = ['Stellar', 'Ripple', 'Bitcoin', 'Ethereum', 'TRON']
 
@@ -35,6 +37,15 @@ export default AddCoin
 const AddCoinContainer = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 2;
+  @media (min-width: ${desktop_min}px) {
+    margin: 10vh 0 0 35vw;
+  }
+  @media (max-width: ${mobile_max}px) {
+    margin-top: 5%;
+    max-width: 100vw;
+  }
 `
 
 const CoinList = styled.ul`
@@ -43,6 +54,12 @@ const CoinList = styled.ul`
   border-radius: 5px;
   width: 650px;
   overflow-y: auto;
-  padding: 20px 35px;
+
+  @media (min-width: ${desktop_min}px) {
+    padding: 20px 35px;
+  }
+  @media (max-width: ${mobile_max}px) {
+    padding: 20px 8px;
+    max-height: 82vh;
+  }
 `
-const TableBody = styled.tbody``

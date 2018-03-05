@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import { desktop_min, mobile_max } from '../helpers/mediaQueries'
+
 class AddCoinItem extends Component {
   state = {
     value: '',
@@ -47,6 +49,7 @@ class AddCoinItem extends Component {
               type="number"
               value={this.state.value}
               onChange={this.handleChange}
+              placeholder="Enter Moon Target"
               step="0.00001"
               required
             />
@@ -69,20 +72,38 @@ const CoinRow = styled.li`
   align-items: center;
   padding: 10px 0;
   font-size: 18px;
+
+  @media (max-width: ${mobile_max}px) {
+    flex-wrap: wrap;
+    height: auto;
+    justify-content: space-between;
+  }
 `
 const CoinIcon = styled.div`
   width: 10%;
   height: 100%;
+  @media (max-width: ${mobile_max}px) {
+    width: auto;
+  }
 `
 const CoinImage = styled.img`
   height: 100%;
+  @media (max-width: ${mobile_max}px) {
+    height: 40px;
+  }
 `
 const CoinName = styled.div`
   width: 20%;
   text-align: center;
+  @media (max-width: ${mobile_max}px) {
+    width: auto;
+  }
 `
 const CoinPrice = styled.div`
   width: 20%;
+  @media (max-width: ${mobile_max}px) {
+    width: auto;
+  }
 `
 
 const CoinInput = styled.div`
@@ -90,25 +111,38 @@ const CoinInput = styled.div`
   height: 100%;
   width: 50%;
   position: relative;
+
+  @media (max-width: ${mobile_max}px) {
+    width: 100%;
+    margin-top: 5px;
+  }
 `
 const CoinForm = styled.form`
   width: 70%;
+  @media (max-width: ${mobile_max}px) {
+    width: 100%;
+  }
 `
 
 const CoinInputField = styled.input`
   height: 100%;
   width: 100%;
+  background: rgba(255, 255, 255, 0.25);
   border: 0;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px;
+  color: white;
   font-size: 20px;
   text-align: center;
+  @media (max-width: ${mobile_max}px) {
+    width: 95%;
+  }
 `
 const CoinButton = styled.button`
   height: 100%;
   min-width: 100px;
   background: #142f40;
   border: 0;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 25px;
   font-weight: bold;
@@ -134,4 +168,9 @@ const ErrorWrapper = styled.div`
   background: #e64949;
   border-radius: 10px;
   box-shadow: 0px 2px 4px 1px rgba(130, 27, 27, 0.3);
+
+  @media (max-width: ${mobile_max}px) {
+    left: 0;
+    top: 30px;
+  }
 `

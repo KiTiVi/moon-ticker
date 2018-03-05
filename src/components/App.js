@@ -81,8 +81,8 @@ class App extends Component {
       case '/addcoin':
         this.setState({
           moonPosition: {
-            top: 'calc(50vh)',
-            left: 100
+            top: '35vh',
+            left: '10vw'
           }
         })
         break
