@@ -74,8 +74,8 @@ class App extends Component {
       case '/welcome':
         this.setState({
           moonPosition: {
-            top: 80,
-            left: 'calc(100vw - 800px)'
+            top: 180,
+            left: 'calc(100vw - 700px)'
           }
         })
         break
@@ -130,6 +130,7 @@ class App extends Component {
               <AddCoin
                 coinData={this.state.coinData.data}
                 onAddCoin={this.onAddCoin}
+                myCoins={this.state.myCoins}
               />
             )}
           />

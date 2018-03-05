@@ -28,7 +28,7 @@ class Moon extends Component {
   easterEggClick = () => {
     this.setState({ secretCount: this.state.secretCount + 1 })
 
-    if (this.state.secretCount === 2) {
+    if (this.state.secretCount === 9) {
       this.setState({ easterEgg: true })
       setTimeout(() => {
         this.setState({ secretCount: 0, easterEgg: false })
