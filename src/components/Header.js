@@ -26,7 +26,7 @@ const Logo = styled.h1`
     margin-top: 25px;
   }
   @media (max-width: ${mobile_max}px) {
-    font-size: 80px;
-    margin-top: 15px;
+    font-size: 60px;
+    margin-top: 20px;
   }
 `
