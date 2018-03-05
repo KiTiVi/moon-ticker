@@ -10,6 +10,7 @@ import Welcome from './Welcome'
 import AddCoin from './AddCoin'
 import Background from './Background'
 import Moon from './Moon'
+import Header from './Header'
 
 class App extends Component {
   state = {
@@ -17,7 +18,11 @@ class App extends Component {
       top: '',
       left: ''
     },
-    coinData: null
+    coinData: {
+      timestamp: null,
+      data: []
+    },
+    myCoins: []
   }
   async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
@@ -39,7 +44,7 @@ class App extends Component {
   }
   refreshCoinData = persistedCoinData => {
     this.setState({ coinData: persistedCoinData }, async () => {
-      if (new Date().getTime() >= this.state.coinData.timeStamp + 60000 * 5) {
+      if (new Date().getTime() >= this.state.coinData.timestamp + 60000 * 5) {
         console.log('new date greater than old')
         let { data } = await this.fetchCoinmarketCap()
         this.persistCoinData(data)
@@ -56,7 +61,11 @@ class App extends Component {
     }
   }
   persistCoinData = coinData => {
-    const coinDataWithTime = { timeStamp: new Date().getTime(), ...coinData }
+    const coinDataWithTime = {
+      timestamp: new Date().getTime(),
+      data: [...coinData]
+    }
+    console.log(coinDataWithTime)
     this.setState({ coinData: coinDataWithTime })
     localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
@@ -65,16 +74,16 @@ class App extends Component {
       case '/welcome':
         this.setState({
           moonPosition: {
-            top: 80,
-            left: 'calc(100vw - 800px)'
+            top: 180,
+            left: 'calc(100vw - 700px)'
           }
         })
         break
       case '/addcoin':
         this.setState({
           moonPosition: {
-            top: 'calc(50vh)',
-            left: 100
+            top: '35vh',
+            left: '10vw'
           }
         })
         break
@@ -88,18 +97,43 @@ class App extends Component {
         break
     }
   }
+  onAddCoin = (coin, moonTarget) => {
+    console.log('TACK FÖR COINET', coin, moonTarget)
+    let newMyCoins = this.state.myCoins.filter(
+      coinItem => coinItem.id !== coin.id
+    )
+    if (
+      this.state.myCoins.filter(coinItem => coinItem.id === coin.id).length > 0
+    ) {
+      newMyCoins.push({ ...coin, moonTarget })
+      this.setState(prevState => ({
+        myCoins: newMyCoins
+      }))
+    } else {
+      this.setState(prevState => ({
+        myCoins: [...prevState.myCoins, { ...coin, moonTarget }]
+      }))
+    }
+  }
   render() {
     return (
       <div className="App">
-        <header>
-          <h1>Welcome to Grupparbete</h1>
-          <NavLink to="/">home</NavLink>
-          <NavLink to="/welcome">Welcome</NavLink>
-          <NavLink to="/addcoin">Add coin</NavLink>
-        </header>
+        <Header />
+        <NavLink to="/">home</NavLink>
+        <NavLink to="/welcome">Welcome</NavLink>
+        <NavLink to="/addcoin">Add coin</NavLink>
         <Switch>
           <Route path="/welcome" render={() => <Welcome />} />
-          <Route path="/addcoin" render={() => <AddCoin />} />
+          <Route
+            path="/addcoin"
+            render={() => (
+              <AddCoin
+                coinData={this.state.coinData.data}
+                onAddCoin={this.onAddCoin}
+                myCoins={this.state.myCoins}
+              />
+            )}
+          />
         </Switch>
         <Moon animated size={550} position={this.state.moonPosition} />
         <Background />
