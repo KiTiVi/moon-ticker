@@ -49,7 +49,7 @@ class AddCoinItem extends Component {
               type="number"
               value={this.state.value}
               onChange={this.handleChange}
-              placeholder="Enter Moon Target"
+              placeholder="Target Rate"
               step="0.00001"
               required
             />
@@ -71,7 +71,7 @@ const CoinRow = styled.li`
   display: flex;
   align-items: center;
   padding: 10px 0;
-  font-size: 18px;
+  font-size: 20px;
 
   @media (max-width: ${mobile_max}px) {
     flex-wrap: wrap;
@@ -126,16 +126,16 @@ const CoinForm = styled.form`
 
 const CoinInputField = styled.input`
   height: 100%;
-  width: 100%;
+  width: 95%;
   background: rgba(255, 255, 255, 0.25);
   border: 0;
   border-radius: 5px;
   color: white;
   font-size: 20px;
   text-align: center;
-  @media (max-width: ${mobile_max}px) {
-    width: 95%;
-  }
+
+  &:focus {
+    outline: none;
 `
 const CoinButton = styled.button`
   height: 100%;
@@ -147,6 +147,16 @@ const CoinButton = styled.button`
   font-size: 25px;
   font-weight: bold;
   color: #2ac16f;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
+  &:hover {
+    box-shadow: 0 2px 10px -4px rgba(0, 0, 0, 0.5);
+  }
+  &:active {
+    box-shadow: inset 0 2px 10px -4px rgba(0, 0, 0, 0.5);
+  }
+  &:focus {
+    outline: none;
+  }
 `
 const CheckCircle = styled.div`
   border-radius: 50%;

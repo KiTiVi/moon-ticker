@@ -43,13 +43,13 @@ const AddCoinContainer = styled.div`
     margin: 10vh 0 0 35vw;
   }
   @media (max-width: ${mobile_max}px) {
-    margin-top: 5%;
-    max-width: 100vw;
+    max-width: 95vw;
+    margin: 0 auto;
   }
 `
 
 const CoinList = styled.ul`
-  background-color: rgba(28, 63, 75, 0.85);
+  background-color: rgba(26, 80, 99, 0.85);
   border: 4px solid #32515c;
   border-radius: 5px;
   width: 650px;
