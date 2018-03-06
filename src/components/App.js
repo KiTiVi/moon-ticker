@@ -11,6 +11,7 @@ import AddCoin from './AddCoin'
 import Background from './Background'
 import Moon from './Moon'
 import Header from './Header'
+import CoinShips from './CoinShips'
 
 class App extends Component {
   state = {
@@ -109,10 +110,12 @@ class App extends Component {
       this.setState(prevState => ({
         myCoins: newMyCoins
       }))
+      console.log(this.state.myCoins)
     } else {
       this.setState(prevState => ({
         myCoins: [...prevState.myCoins, { ...coin, moonTarget }]
       }))
+      console.log(this.state.myCoins)
     }
   }
   render() {
@@ -123,6 +126,7 @@ class App extends Component {
         <NavLink to="/welcome">Welcome</NavLink>
         <NavLink to="/addcoin">Add coin</NavLink>
         <Switch>
+          <Route exact path="/" render={() => <CoinShips myCoins={this.state.myCoins} />} />
           <Route path="/welcome" render={() => <Welcome />} />
           <Route
             path="/addcoin"
