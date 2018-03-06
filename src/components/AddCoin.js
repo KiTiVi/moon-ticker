@@ -18,6 +18,7 @@ class AddCoin extends Component {
             onAddCoin={this.props.onAddCoin}
             coin={coin}
             key={coin.id}
+            myCoins={this.props.myCoins}
           />
         )
       })
