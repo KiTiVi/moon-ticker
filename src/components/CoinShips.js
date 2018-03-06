@@ -9,7 +9,7 @@ class CoinShips extends Component {
       console.log(percent)
       console.log(progress)
       return (
-        <CoinShip style={{left: progress}}><p>{coin.symbol}</p></CoinShip>
+        <CoinShip key={coin.id} style={{left: progress}}><p>{coin.symbol}</p></CoinShip>
       )
     })
   }
