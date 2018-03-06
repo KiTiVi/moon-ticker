@@ -9,6 +9,10 @@ class AddCoinItem extends Component {
     error: null
   }
 
+  componentDidMount() {
+    this.renderValue()
+  }
+
   handleSubmit = e => {
     const { price_usd, name } = this.props.coin
     e.preventDefault()
@@ -25,12 +29,22 @@ class AddCoinItem extends Component {
 
     // Validation complete - lets submit! :)
     this.props.onAddCoin(this.props.coin, this.state.value)
-    this.setState({ value: '' })
   }
 
   handleChange = e => {
     const input = e.target.value
     this.setState({ value: input, error: null })
+  }
+
+  renderValue = () => {
+    console.log(this.props.myCoins)
+    this.props.myCoins.map(coin => {
+      if (coin.id === this.props.coin.id) {
+        this.setState({ value: coin.moonTarget })
+      } else {
+        console.log('Fanns inte')
+      }
+    })
   }
 
   render() {
