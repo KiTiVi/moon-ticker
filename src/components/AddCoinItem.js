@@ -208,7 +208,6 @@ const CoinButton = styled.button`
   border: 0;
   cursor: pointer;
   font-size: 25px;
-  font-weight: bold;
   color: #2ac16f;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
   &:hover {
