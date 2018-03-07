@@ -76,6 +76,7 @@ const RocketHoverInfo = styled.div`
 
 const Rocket = styled.div`
   position: relative;
+  z-index: 2;
   &:hover ${RocketHoverInfo} {
     visibility: visible !important;
   }

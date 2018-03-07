@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
+import Responsive from 'react-responsive'
+
+import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
 import CoinRocket from './CoinRocket'
+import Moon from './Moon'
 
 class CoinRocketList extends Component {
   renderCoinShips = () => {
@@ -33,8 +37,24 @@ class CoinRocketList extends Component {
 
   render() {
     return [
-      <CoinPath key="1">{this.renderCoinShips()}</CoinPath>,
-      <ToggleAddButton key="2" onClick={this.props.toggleAddCoin}>
+      <CoinPath key="1">
+        {this.renderCoinShips()}
+        <Responsive maxWidth={mobile_max}>
+          <Moon
+            animated
+            size={250}
+            position={{
+              top: 100,
+              right: -450
+            }}
+          />
+        </Responsive>
+      </CoinPath>,
+      <ToggleAddButton
+        isShowingAddCoin={this.props.isShowingAddCoin}
+        key="2"
+        onClick={this.props.toggleAddCoin}
+      >
         COINS
       </ToggleAddButton>
     ]
@@ -44,14 +64,22 @@ class CoinRocketList extends Component {
 export default CoinRocketList
 
 const CoinPath = styled.ul`
-  width: calc(100vw - 210px);
   height: 550px;
-  top: calc(50vh - 310px);
   position: absolute;
   list-style: none;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  @media (min-width: ${desktop_min}px) {
+    width: calc(100vw - 210px);
+    top: calc(50vh - 300px);
+  }
+  @media (max-width: ${mobile_max}px) {
+    width: 1200px;
+    overflow-y: scroll;
+    height: 550px;
+    bottom: 0;
+  }
 `
 const addButtonAnimation = keyframes`
   0% {
@@ -66,6 +94,7 @@ const addButtonAnimation = keyframes`
 `
 
 const ToggleAddButton = styled.button`
+  display: ${({ isShowingAddCoin }) => (isShowingAddCoin ? 'none' : 'block')};
   animation: ${addButtonAnimation} 10s infinite linear;
   background: #ffb52c;
   color: #3e3e3e;
@@ -73,9 +102,15 @@ const ToggleAddButton = styled.button`
   font-size: 20px;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
   position: absolute;
-  bottom: 30px;
-  right: 30px;
   width: 200px;
   height: 80px;
   z-index: 1;
+  @media (min-width: ${desktop_min}px) {
+    bottom: 30px;
+    right: 30px;
+  }
+  @media (max-width: ${mobile_max}px) {
+    bottom: 10px;
+    right: 1px;
+  }
 `

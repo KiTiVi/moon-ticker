@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import AddCoinItem from './AddCoinItem'
 
@@ -27,6 +27,9 @@ class AddCoin extends Component {
   render() {
     return (
       <AddCoinContainer>
+        <ToggleButton onClick={this.props.toggleAddCoin}>
+          <i className="fas fa-times" />
+        </ToggleButton>
         <CoinList>{this.renderTableRows()}</CoinList>
       </AddCoinContainer>
     )
@@ -40,11 +43,16 @@ const AddCoinContainer = styled.div`
   justify-content: center;
   position: relative;
   @media (min-width: ${desktop_min}px) {
-    margin: 10vh 0 0 35vw;
+    position: absolute;
+    top: 25%;
+    left: 45%;
+    /*margin: 10vh 0 0 35vw;*/
   }
   @media (max-width: ${mobile_max}px) {
-    max-width: 95vw;
+    width: 95vw;
     margin: 0 auto;
+    max-width: 650px;
+    padding-left: 15px;
   }
 `
 
@@ -53,14 +61,49 @@ const CoinList = styled.ul`
   border: 14px solid #32515c;
   width: 650px;
   overflow-y: auto;
-  clip-path: polygon(0 0, 98% 3%, 98% 98%, 4% 100%);
-  z-index: 4;
+  clip-path: polygon(0 0, 97% 3%, 98% 97%, 4% 100%);
+  z-index: 1;
 
   @media (min-width: ${desktop_min}px) {
     padding: 20px 35px;
   }
   @media (max-width: ${mobile_max}px) {
-    padding: 20px 8px;
+    padding: 20px 15px;
     max-height: 82vh;
   }
+`
+
+const roundButtonAnimation = keyframes`
+0% {
+  transform: scale(1);
+  box-shadow: inset 0px 0px 1px 0px #e20000b3;
+}
+50% {
+  transform: scale(0.94);
+  box-shadow: inset 0px 0px 8px 0px #e20000b3;
+}
+100% {
+  transform: scale(1);
+  box-shadow: inset 0px 0px 1px 0px #e20000b3;
+}
+`
+
+const ToggleButton = styled.button`
+  animation: ${roundButtonAnimation} 4s infinite;
+  background-color: #ff1745;
+  color: #f5f5f5;
+  cursor: pointer;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  z-index: 5;
+  right: 20px;
+  top: -4px;
+  outline: none;
+  border: 3px solid #32515c;
+  @media (max-width: ${mobile_max}px) {
+    right: 15px;
+  }
+}
 `

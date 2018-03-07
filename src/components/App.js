@@ -13,6 +13,8 @@ import Moon from './Moon'
 import Header from './Header'
 import CoinRocketList from './CoinRocketList'
 
+const SCREEN_ORIENTATION = window.screen.orientation
+
 class App extends Component {
   state = {
     moonPosition: {
@@ -24,13 +26,20 @@ class App extends Component {
       data: []
     },
     myCoins: [],
-    showAddCoin: false
+    showAddCoin: false,
+    isMobile: null
   }
   async componentDidMount() {
-    window.addEventListener('resize', () => console.log(window.innerWidth))
-    this.setMoonPosition(this.props.location.pathname)
+    this.screenOrientation = SCREEN_ORIENTATION
+
+    await this.setIsMobile()
+    window.addEventListener('resize', () => {
+      this.setIsMobile()
+      this.setMoonPosition(this.props.location.pathname, this.state.isMobile)
+    })
+    this.setMoonPosition(this.props.location.pathname, this.state.isMobile)
     this.props.history.listen((location, action) => {
-      this.setMoonPosition(location.pathname)
+      this.setMoonPosition(location.pathname, this.state.isMobile)
     })
     this.checkLocalStorage()
   }
@@ -71,13 +80,28 @@ class App extends Component {
     this.setState({ coinData: coinDataWithTime })
     localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
-  setMoonPosition = path => {
+
+  setIsMobile = async () => {
+    if (window.innerWidth <= mobile_max && !this.state.isMobile) {
+      await this.setState({ isMobile: true })
+      this.screenOrientation.lock('landscape')
+      console.log(this.screenOrientation)
+    }
+
+    if (window.innerWidth >= desktop_min && this.state.isMobile) {
+      await this.setState({ isMobile: false })
+      this.screenOrientation.unlock()
+    }
+  }
+
+  // MINNES KOMMENTAR
+  setMoonPosition = (path, isMobile) => {
     switch (path) {
       case '/welcome':
         this.setState({
           moonPosition: {
             top: 180,
-            left: 'calc(100vw - 700px)'
+            left: 'calc(100vw - 400px)'
           }
         })
         break
@@ -92,8 +116,8 @@ class App extends Component {
       default:
         this.setState({
           moonPosition: {
-            top: 'calc(50vh - 310px)',
-            left: 'calc(100vw - 210px)'
+            top: isMobile ? 160 : 'calc(50vh - 310px)',
+            left: isMobile ? 1800 : 'calc(100vw - 210px)'
           }
         })
         break
@@ -132,6 +156,7 @@ class App extends Component {
 
         {this.state.showAddCoin && (
           <AddCoin
+            toggleAddCoin={this.toggleAddCoin}
             coinData={this.state.coinData.data}
             onAddCoin={this.onAddCoin}
             myCoins={this.state.myCoins}
@@ -143,6 +168,7 @@ class App extends Component {
             path="/"
             render={() => (
               <CoinRocketList
+                isShowingAddCoin={this.state.showAddCoin}
                 toggleAddCoin={this.toggleAddCoin}
                 myCoins={this.state.myCoins}
               />
@@ -153,6 +179,7 @@ class App extends Component {
             path="/addcoin"
             render={() => (
               <AddCoin
+                toggleAddCoin={() => this.props.history.push('/')}
                 coinData={this.state.coinData.data}
                 onAddCoin={this.onAddCoin}
                 myCoins={this.state.myCoins}
@@ -160,7 +187,12 @@ class App extends Component {
             )}
           />
         </Switch>
-        <Moon animated size={550} position={this.state.moonPosition} />
+        <Responsive minWidth={desktop_min}>
+          <Moon animated size={550} position={this.state.moonPosition} />
+        </Responsive>
+        <Responsive maxWidth={mobile_max}>
+          <Moon animated size={250} position={this.state.moonPosition} />
+        </Responsive>
         <Background />
       </div>
     )
