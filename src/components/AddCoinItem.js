@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
 class AddCoinItem extends Component {
   state = {
     value: '',
-    error: null
+    error: null,
+    moonTarget: null
   }
 
   componentDidMount() {
-    this.renderValue()
+    this.setPersistedMoonTarget(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setPersistedMoonTarget(nextProps)
   }
 
   handleSubmit = e => {
@@ -28,6 +33,7 @@ class AddCoinItem extends Component {
     }
 
     // Validation complete - lets submit! :)
+    this.setState({ moonTarget: this.state.value })
     this.props.onAddCoin(this.props.coin, this.state.value)
   }
 
@@ -36,11 +42,14 @@ class AddCoinItem extends Component {
     this.setState({ value: input, error: null })
   }
 
-  renderValue = () => {
-    console.log(this.props.myCoins)
-    this.props.myCoins.map(coin => {
+  setPersistedMoonTarget = props => {
+    console.log(props.myCoins)
+    props.myCoins.map(coin => {
       if (coin.id === this.props.coin.id) {
-        return this.setState({ value: coin.moonTarget })
+        return this.setState({
+          value: coin.moonTarget,
+          moonTarget: coin.moonTarget
+        })
       } else {
         return console.log('Fanns inte')
       }
@@ -90,7 +99,13 @@ class AddCoinItem extends Component {
             />
           </CoinForm>
           <CoinButton onClick={this.handleSubmit}>
-            <CheckCircle>✓</CheckCircle>
+            {this.state.moonTarget === this.state.value ? (
+              <CheckCircle>✓</CheckCircle>
+            ) : this.state.moonTarget === null ? (
+              'ADD'
+            ) : (
+              'CHANGE'
+            )}
           </CoinButton>
           {this.state.error && <ErrorWrapper>{this.state.error}</ErrorWrapper>}
         </CoinInput>
@@ -169,9 +184,22 @@ const CoinInputField = styled.input`
   color: white;
   font-size: 20px;
   text-align: center;
-
+  clip-path: polygon(0 0, 100% 3%, 98% 100%, 0 98%);
   &:focus {
     outline: none;
+  }
+`
+
+const skewingBlock = keyframes`
+  0% {
+    clip-path: polygon(0 0, 98% 3%, 98% 98%, 0 100%);
+  }
+  50% {
+    clip-path: polygon(4% 6%, 100% 0, 100% 100%, 2% 98%);
+  }
+  100% {
+    clip-path: polygon(0 0, 98% 3%, 98% 98%, 0 100%);
+  }
 `
 const CoinButton = styled.button`
   height: 100%;
@@ -180,19 +208,21 @@ const CoinButton = styled.button`
   border: 0;
   cursor: pointer;
   font-size: 25px;
-  font-weight: bold;
   color: #2ac16f;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
   &:hover {
-    box-shadow: 0 2px 10px -4px rgba(0, 0, 0, 0.5);
+    animation: ${skewingBlock} 1s infinite linear;
   }
   &:active {
+    animation: none;
+    transform: scale(0.92);
     box-shadow: inset 0 2px 10px -4px rgba(0, 0, 0, 0.5);
   }
   &:focus {
     outline: none;
   }
 `
+
 const CheckCircle = styled.div`
   border-radius: 50%;
   background: #142f40;

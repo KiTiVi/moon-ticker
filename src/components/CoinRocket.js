@@ -49,6 +49,7 @@ transform: translateY(3px);
 }
 `
 const RocketPosition = styled.li`
+  transition: 4s all cubic-bezier(0.84, 0.07, 0.43, 1);
   left: ${props => props.progress + '%'};
   position: relative;
 `
@@ -56,7 +57,7 @@ const RocketHoverInfo = styled.div`
   height: 100px;
   width: 200px;
   background: #164454d9;
-  z-index: 4;
+  z-index: 1;
   position: absolute;
   visibility: hidden;
   top: -110px;
@@ -75,7 +76,6 @@ const RocketHoverInfo = styled.div`
 
 const Rocket = styled.div`
   position: relative;
-  transition: 1s all cubic-bezier(0.84, 0.07, 0.43, 1);
   &:hover ${RocketHoverInfo} {
     visibility: visible !important;
   }
