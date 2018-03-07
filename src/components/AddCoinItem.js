@@ -46,14 +46,35 @@ class AddCoinItem extends Component {
       }
     })
   }
-
+  renderCoinIconPath = () => {
+    switch (this.props.coin.id) {
+      case 'bitcoin':
+        return 'bitcoin.png'
+        break
+      case 'stellar':
+        return 'stellar.png'
+        break
+      case 'ripple':
+        return 'ripple.png'
+        break
+      case 'tron':
+        return 'tron.png'
+        break
+      case 'ethereum':
+        return 'ether.png'
+        break
+      default:
+        return 'bitcoin.png'
+        break
+    }
+  }
   render() {
     const { name, price_usd } = this.props.coin
 
     return (
       <CoinRow>
         <CoinIcon>
-          <CoinImage src={'/assets/bitcoin.png'} alt="icon" />
+          <CoinImage src={'/assets/' + this.renderCoinIconPath()} alt="icon" />
         </CoinIcon>
         <CoinName>{name}</CoinName>
         <CoinPrice>${price_usd}</CoinPrice>
@@ -96,6 +117,8 @@ const CoinRow = styled.li`
 const CoinIcon = styled.div`
   width: 10%;
   height: 100%;
+  display: flex;
+  justify-content: center;
   @media (max-width: ${mobile_max}px) {
     width: auto;
   }

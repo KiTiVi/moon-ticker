@@ -55,15 +55,6 @@ const CoinList = styled.ul`
   overflow-y: auto;
   clip-path: polygon(0 0, 98% 3%, 98% 98%, 4% 100%);
   z-index: 4;
-  &:after {
-    content: ' ';
-    position: absolute;
-    top: 75%;
-    left: 73.3%;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent #000000d9 transparent transparent;
-  }
 
   @media (min-width: ${desktop_min}px) {
     padding: 20px 35px;
