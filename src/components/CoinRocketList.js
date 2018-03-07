@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import CoinRocket from './CoinRocket'
 
@@ -32,7 +32,12 @@ class CoinRocketList extends Component {
   }
 
   render() {
-    return <CoinPath>{this.renderCoinShips()}</CoinPath>
+    return [
+      <CoinPath key="1">{this.renderCoinShips()}</CoinPath>,
+      <ToggleAddButton key="2" onClick={this.props.toggleAddCoin}>
+        COINS
+      </ToggleAddButton>
+    ]
   }
 }
 
@@ -47,4 +52,30 @@ const CoinPath = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+`
+const addButtonAnimation = keyframes`
+  0% {
+    clip-path: polygon(11% 3%, 94% 0, 94% 100%, 9% 97%);
+  }
+  50% {
+    clip-path: polygon(2% 2%, 100% 5%, 100% 96%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(11% 3%, 94% 0, 94% 100%, 9% 97%);
+  }
+`
+
+const ToggleAddButton = styled.button`
+  animation: ${addButtonAnimation} 10s infinite linear;
+  background: #ffb52c;
+  color: #3e3e3e;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 200px;
+  height: 80px;
+  z-index: 1;
 `

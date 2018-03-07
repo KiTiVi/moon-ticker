@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
@@ -169,9 +169,22 @@ const CoinInputField = styled.input`
   color: white;
   font-size: 20px;
   text-align: center;
-
+  clip-path: polygon(0 0, 100% 3%, 98% 100%, 0 98%);
   &:focus {
     outline: none;
+  }
+`
+
+const skewingBlock = keyframes`
+  0% {
+    clip-path: polygon(0 0, 98% 3%, 98% 98%, 0 100%);
+  }
+  50% {
+    clip-path: polygon(4% 6%, 100% 0, 100% 100%, 2% 98%);
+  }
+  100% {
+    clip-path: polygon(0 0, 98% 3%, 98% 98%, 0 100%);
+  }
 `
 const CoinButton = styled.button`
   height: 100%;
@@ -184,15 +197,18 @@ const CoinButton = styled.button`
   color: #2ac16f;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
   &:hover {
-    box-shadow: 0 2px 10px -4px rgba(0, 0, 0, 0.5);
+    animation: ${skewingBlock} 1s infinite linear;
   }
   &:active {
+    animation: none;
+    transform: scale(0.92);
     box-shadow: inset 0 2px 10px -4px rgba(0, 0, 0, 0.5);
   }
   &:focus {
     outline: none;
   }
 `
+
 const CheckCircle = styled.div`
   border-radius: 50%;
   background: #142f40;

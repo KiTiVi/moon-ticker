@@ -129,7 +129,7 @@ class App extends Component {
         <NavLink to="/">home</NavLink>
         <NavLink to="/welcome">Welcome</NavLink>
         <NavLink to="/addcoin">Add coin</NavLink>
-        <button onClick={this.toggleAddCoin}>Add coin modal</button>
+
         {this.state.showAddCoin && (
           <AddCoin
             coinData={this.state.coinData.data}
@@ -141,7 +141,12 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={() => <CoinRocketList myCoins={this.state.myCoins} />}
+            render={() => (
+              <CoinRocketList
+                toggleAddCoin={this.toggleAddCoin}
+                myCoins={this.state.myCoins}
+              />
+            )}
           />
           <Route path="/welcome" render={() => <Welcome />} />
           <Route
