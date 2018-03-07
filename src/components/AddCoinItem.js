@@ -11,7 +11,7 @@ class AddCoinItem extends Component {
   }
 
   componentDidMount() {
-    this.setPersistedMoonTarget(this.props)
+    this.setPersistedMoonTarget(this.props, true)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,7 +33,6 @@ class AddCoinItem extends Component {
     }
 
     // Validation complete - lets submit! :)
-    this.setState({ moonTarget: this.state.value })
     this.props.onAddCoin(this.props.coin, this.state.value)
   }
 
@@ -42,12 +41,17 @@ class AddCoinItem extends Component {
     this.setState({ value: input, error: null })
   }
 
-  setPersistedMoonTarget = props => {
+  setPersistedMoonTarget = (props, shouldUpdateValue) => {
     console.log(props.myCoins)
     props.myCoins.map(coin => {
       if (coin.id === this.props.coin.id) {
+        if (shouldUpdateValue) {
+          return this.setState({
+            value: coin.moonTarget,
+            moonTarget: coin.moonTarget
+          })
+        }
         return this.setState({
-          value: coin.moonTarget,
           moonTarget: coin.moonTarget
         })
       } else {
