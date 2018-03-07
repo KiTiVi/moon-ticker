@@ -11,6 +11,7 @@ import AddCoin from './AddCoin'
 import Background from './Background'
 import Moon from './Moon'
 import Header from './Header'
+import CoinRocketList from './CoinRocketList'
 
 class App extends Component {
   state = {
@@ -22,7 +23,8 @@ class App extends Component {
       timestamp: null,
       data: []
     },
-    myCoins: []
+    myCoins: [],
+    showAddCoin: false
   }
   async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
@@ -109,11 +111,16 @@ class App extends Component {
       this.setState(prevState => ({
         myCoins: newMyCoins
       }))
+      console.log(this.state.myCoins)
     } else {
       this.setState(prevState => ({
         myCoins: [...prevState.myCoins, { ...coin, moonTarget }]
       }))
+      console.log(this.state.myCoins)
     }
+  }
+  toggleAddCoin = () => {
+    this.setState(prevState => ({ showAddCoin: !prevState.showAddCoin }))
   }
   render() {
     return (
@@ -122,7 +129,20 @@ class App extends Component {
         <NavLink to="/">home</NavLink>
         <NavLink to="/welcome">Welcome</NavLink>
         <NavLink to="/addcoin">Add coin</NavLink>
+        <button onClick={this.toggleAddCoin}>Add coin modal</button>
+        {this.state.showAddCoin && (
+          <AddCoin
+            coinData={this.state.coinData.data}
+            onAddCoin={this.onAddCoin}
+            myCoins={this.state.myCoins}
+          />
+        )}
         <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <CoinRocketList myCoins={this.state.myCoins} />}
+          />
           <Route path="/welcome" render={() => <Welcome />} />
           <Route
             path="/addcoin"

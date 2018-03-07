@@ -40,20 +40,41 @@ class AddCoinItem extends Component {
     console.log(this.props.myCoins)
     this.props.myCoins.map(coin => {
       if (coin.id === this.props.coin.id) {
-        this.setState({ value: coin.moonTarget })
+        return this.setState({ value: coin.moonTarget })
       } else {
-        console.log('Fanns inte')
+        return console.log('Fanns inte')
       }
     })
   }
-
+  renderCoinIconPath = () => {
+    switch (this.props.coin.id) {
+      case 'bitcoin':
+        return 'bitcoin.png'
+        break
+      case 'stellar':
+        return 'stellar.png'
+        break
+      case 'ripple':
+        return 'ripple.png'
+        break
+      case 'tron':
+        return 'tron.png'
+        break
+      case 'ethereum':
+        return 'ether.png'
+        break
+      default:
+        return 'bitcoin.png'
+        break
+    }
+  }
   render() {
     const { name, price_usd } = this.props.coin
 
     return (
       <CoinRow>
         <CoinIcon>
-          <CoinImage src={'/assets/bitcoin.png'} alt="icon" />
+          <CoinImage src={'/assets/' + this.renderCoinIconPath()} alt="icon" />
         </CoinIcon>
         <CoinName>{name}</CoinName>
         <CoinPrice>${price_usd}</CoinPrice>
@@ -96,6 +117,8 @@ const CoinRow = styled.li`
 const CoinIcon = styled.div`
   width: 10%;
   height: 100%;
+  display: flex;
+  justify-content: center;
   @media (max-width: ${mobile_max}px) {
     width: auto;
   }
@@ -143,7 +166,6 @@ const CoinInputField = styled.input`
   width: 95%;
   background: rgba(255, 255, 255, 0.25);
   border: 0;
-  border-radius: 5px;
   color: white;
   font-size: 20px;
   text-align: center;
@@ -156,7 +178,6 @@ const CoinButton = styled.button`
   min-width: 100px;
   background: #142f40;
   border: 0;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 25px;
   font-weight: bold;
