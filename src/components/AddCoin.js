@@ -62,7 +62,7 @@ const CoinList = styled.ul`
   width: 650px;
   overflow-y: auto;
   clip-path: polygon(0 0, 97% 3%, 98% 97%, 4% 100%);
-  z-index: 1;
+  z-index: 3;
 
   @media (min-width: ${desktop_min}px) {
     padding: 20px 35px;
