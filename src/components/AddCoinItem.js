@@ -6,11 +6,16 @@ import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 class AddCoinItem extends Component {
   state = {
     value: '',
-    error: null
+    error: null,
+    moonTarget: null
   }
 
   componentDidMount() {
-    this.renderValue()
+    this.setPersistedMoonTarget(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setPersistedMoonTarget(nextProps)
   }
 
   handleSubmit = e => {
@@ -28,6 +33,7 @@ class AddCoinItem extends Component {
     }
 
     // Validation complete - lets submit! :)
+    this.setState({ moonTarget: this.state.value })
     this.props.onAddCoin(this.props.coin, this.state.value)
   }
 
@@ -36,11 +42,14 @@ class AddCoinItem extends Component {
     this.setState({ value: input, error: null })
   }
 
-  renderValue = () => {
-    console.log(this.props.myCoins)
-    this.props.myCoins.map(coin => {
+  setPersistedMoonTarget = props => {
+    console.log(props.myCoins)
+    props.myCoins.map(coin => {
       if (coin.id === this.props.coin.id) {
-        return this.setState({ value: coin.moonTarget })
+        return this.setState({
+          value: coin.moonTarget,
+          moonTarget: coin.moonTarget
+        })
       } else {
         return console.log('Fanns inte')
       }
@@ -90,7 +99,13 @@ class AddCoinItem extends Component {
             />
           </CoinForm>
           <CoinButton onClick={this.handleSubmit}>
-            <CheckCircle>✓</CheckCircle>
+            {this.state.moonTarget === this.state.value ? (
+              <CheckCircle>✓</CheckCircle>
+            ) : this.state.moonTarget === null ? (
+              'ADD'
+            ) : (
+              'CHANGE'
+            )}
           </CoinButton>
           {this.state.error && <ErrorWrapper>{this.state.error}</ErrorWrapper>}
         </CoinInput>
