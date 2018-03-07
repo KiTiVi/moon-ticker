@@ -23,7 +23,8 @@ class App extends Component {
       timestamp: null,
       data: []
     },
-    myCoins: []
+    myCoins: [],
+    showAddCoin: false
   }
   async componentDidMount() {
     window.addEventListener('resize', () => console.log(window.innerWidth))
@@ -118,6 +119,9 @@ class App extends Component {
       console.log(this.state.myCoins)
     }
   }
+  toggleAddCoin = () => {
+    this.setState(prevState => ({ showAddCoin: !prevState.showAddCoin }))
+  }
   render() {
     return (
       <div className="App">
@@ -125,6 +129,14 @@ class App extends Component {
         <NavLink to="/">home</NavLink>
         <NavLink to="/welcome">Welcome</NavLink>
         <NavLink to="/addcoin">Add coin</NavLink>
+        <button onClick={this.toggleAddCoin}>Add coin modal</button>
+        {this.state.showAddCoin && (
+          <AddCoin
+            coinData={this.state.coinData.data}
+            onAddCoin={this.onAddCoin}
+            myCoins={this.state.myCoins}
+          />
+        )}
         <Switch>
           <Route
             exact

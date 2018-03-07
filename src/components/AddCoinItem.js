@@ -40,9 +40,9 @@ class AddCoinItem extends Component {
     console.log(this.props.myCoins)
     this.props.myCoins.map(coin => {
       if (coin.id === this.props.coin.id) {
-        this.setState({ value: coin.moonTarget })
+        return this.setState({ value: coin.moonTarget })
       } else {
-        console.log('Fanns inte')
+        return console.log('Fanns inte')
       }
     })
   }
@@ -143,7 +143,6 @@ const CoinInputField = styled.input`
   width: 95%;
   background: rgba(255, 255, 255, 0.25);
   border: 0;
-  border-radius: 5px;
   color: white;
   font-size: 20px;
   text-align: center;
@@ -156,7 +155,6 @@ const CoinButton = styled.button`
   min-width: 100px;
   background: #142f40;
   border: 0;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 25px;
   font-weight: bold;

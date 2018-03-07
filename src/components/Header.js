@@ -19,7 +19,7 @@ const CenteredHeader = styled.header`
 
 const Logo = styled.h1`
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black,
-    4px 4px 0 #f3e336;
+    4px 4px 0 #5d6e77;
 
   @media (min-width: ${desktop_min}px) {
     font-size: 120px;
