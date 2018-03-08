@@ -150,10 +150,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <NavLink to="/">home</NavLink>
-        <NavLink to="/welcome">Welcome</NavLink>
-        <NavLink to="/addcoin">Add coin</NavLink>
-
         {this.state.showAddCoin && (
           <AddCoin
             toggleAddCoin={this.toggleAddCoin}
