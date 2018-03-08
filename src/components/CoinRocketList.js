@@ -45,7 +45,7 @@ class CoinRocketList extends Component {
             size={250}
             position={{
               top: 100,
-              right: -450
+              right: -285
             }}
           />
         </Responsive>
