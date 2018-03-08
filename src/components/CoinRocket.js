@@ -4,18 +4,26 @@ import styled, { keyframes } from 'styled-components'
 import RocketFire from './RocketFire'
 import RocketSmoke from './RocketSmoke'
 
+import coinIconPath from '../helpers/coinIconPath'
+
 class CoinRocket extends Component {
   render() {
     const {
       isGoingUp,
       progress,
-      coin: { name, moonTarget, price_usd, symbol }
+      coin: { name, moonTarget, price_usd, symbol, percent_change_1h },
+      coin
     } = this.props
     return (
       <RocketPosition progress={progress}>
-        <Rocket>
+        <Rocket onClick={() => console.log('Routa till detail sida')}>
+          <RocketHoverIcon>
+            <img src={coinIconPath(coin)} alt="coin-icon" />
+          </RocketHoverIcon>
           <RocketHoverInfo>
-            {name} - ${price_usd}
+            <h4>{name}</h4>
+            <p>${price_usd}</p>
+            <p>{percent_change_1h}%</p>
           </RocketHoverInfo>
           <RocketRotate isGoingUp={isGoingUp}>
             <RocketInner>
@@ -54,15 +62,30 @@ const RocketPosition = styled.li`
   position: relative;
 `
 const RocketHoverInfo = styled.div`
+  background: #164454b0;
+  border: 8px solid #32515c;
   height: 100px;
   width: 200px;
-  background: #164454d9;
   z-index: 1;
   position: absolute;
   visibility: hidden;
   top: -110px;
-  clip-path: polygon(0 0, 98% 3%, 98% 98%, 4% 100%);
+  clip-path: polygon(0 0, 98% 9%, 98% 98%, 4% 100%);
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  h4 {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
   &:after {
     content: ' ';
     position: absolute;
@@ -73,12 +96,39 @@ const RocketHoverInfo = styled.div`
     border-color: transparent #000000d9 transparent transparent;
   }
 `
+const RocketHoverIcon = styled.figure`
+  background: #123d4c;
+  border: 4px solid #32515c;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  visibility: hidden;
+  position: absolute;
+  top: -132px;
+  left: -16px;
+  z-index: 2;
+  img {
+    height: inherit;
+    width: inherit;
+    object-fit: contain;
+    position: relative;
+    top: -3px;
+    left: -4px;
+  }
+`
 
 const Rocket = styled.div`
   position: relative;
   z-index: 2;
-  &:hover ${RocketHoverInfo} {
-    visibility: visible !important;
+  cursor: pointer;
+  &:hover {
+    ${RocketHoverInfo} {
+      visibility: visible;
+    }
+    ${RocketHoverIcon} {
+      visibility: visible;
+    }
   }
 `
 
