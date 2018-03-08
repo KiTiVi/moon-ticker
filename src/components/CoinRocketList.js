@@ -6,6 +6,7 @@ import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
 import CoinRocket from './CoinRocket'
 import Moon from './Moon'
+import CallToActionButton from './CallToActionButton'
 
 class CoinRocketList extends Component {
   renderCoinShips = () => {
@@ -50,13 +51,13 @@ class CoinRocketList extends Component {
           />
         </Responsive>
       </CoinPath>,
-      <ToggleAddButton
-        isShowingAddCoin={this.props.isShowingAddCoin}
+      <CallToActionButton
         key="2"
-        onClick={this.props.toggleAddCoin}
-      >
-        COINS
-      </ToggleAddButton>
+        title="COINS"
+        isHidden={this.props.isShowingAddCoin}
+        isAbsolute
+        callBack={this.props.toggleAddCoin}
+      />
     ]
   }
 }
@@ -80,38 +81,5 @@ const CoinPath = styled.ul`
     height: 750px;
     padding-top: 200px;
     bottom: 0;
-  }
-`
-const addButtonAnimation = keyframes`
-  0% {
-    clip-path: polygon(11% 3%, 94% 0, 94% 100%, 9% 97%);
-  }
-  50% {
-    clip-path: polygon(2% 2%, 100% 5%, 100% 96%, 0 100%);
-  }
-  100% {
-    clip-path: polygon(11% 3%, 94% 0, 94% 100%, 9% 97%);
-  }
-`
-
-const ToggleAddButton = styled.button`
-  display: ${({ isShowingAddCoin }) => (isShowingAddCoin ? 'none' : 'block')};
-  animation: ${addButtonAnimation} 10s infinite linear;
-  background: #ffb52c;
-  color: #3e3e3e;
-  cursor: pointer;
-  font-size: 20px;
-  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  width: 200px;
-  height: 80px;
-  z-index: 2;
-  @media (min-width: ${desktop_min}px) {
-    bottom: 30px;
-    right: 30px;
-  }
-  @media (max-width: ${mobile_max}px) {
-    bottom: 10px;
-    right: 1px;
   }
 `
