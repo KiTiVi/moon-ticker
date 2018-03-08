@@ -44,8 +44,8 @@ class CoinRocketList extends Component {
             animated
             size={250}
             position={{
-              top: 100,
-              right: -450
+              top: 250,
+              right: -285
             }}
           />
         </Responsive>
@@ -77,7 +77,8 @@ const CoinPath = styled.ul`
   @media (max-width: ${mobile_max}px) {
     width: 1200px;
     overflow-y: scroll;
-    height: 550px;
+    height: 750px;
+    padding-top: 200px;
     bottom: 0;
   }
 `
@@ -104,7 +105,7 @@ const ToggleAddButton = styled.button`
   position: absolute;
   width: 200px;
   height: 80px;
-  z-index: 1;
+  z-index: 2;
   @media (min-width: ${desktop_min}px) {
     bottom: 30px;
     right: 30px;
