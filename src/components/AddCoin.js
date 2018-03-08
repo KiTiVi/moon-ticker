@@ -42,6 +42,7 @@ const AddCoinContainer = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
+  z-index: 5;
   @media (min-width: ${desktop_min}px) {
     position: absolute;
     top: 25%;
@@ -61,8 +62,7 @@ const CoinList = styled.ul`
   border: 14px solid #32515c;
   width: 650px;
   overflow-y: auto;
-  clip-path: polygon(0 0, 97% 3%, 98% 97%, 4% 100%);
-  z-index: 3;
+  clip-path: polygon(0 0, 97% 3%, 98% 97%, 4% 97%);
 
   @media (min-width: ${desktop_min}px) {
     padding: 20px 35px;
@@ -70,6 +70,7 @@ const CoinList = styled.ul`
   @media (max-width: ${mobile_max}px) {
     padding: 20px 15px;
     max-height: 82vh;
+    clip-path: polygon(0 0, 96% 2%, 96% 97%, 5% 97%);
   }
 `
 
@@ -98,12 +99,12 @@ const ToggleButton = styled.button`
   width: 40px;
   position: absolute;
   z-index: 5;
-  right: 20px;
-  top: -4px;
+  right: 5px;
+  top: 0px;
   outline: none;
   border: 3px solid #32515c;
   @media (max-width: ${mobile_max}px) {
-    right: 15px;
+    right: 0px;
   }
 }
 `

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { desktop_min, mobile_max } from '../helpers/mediaQueries'
+import coinIconPath from '../helpers/coinIconPath'
 
 class AddCoinItem extends Component {
   state = {
@@ -59,35 +60,14 @@ class AddCoinItem extends Component {
       }
     })
   }
-  renderCoinIconPath = () => {
-    switch (this.props.coin.id) {
-      case 'bitcoin':
-        return 'bitcoin.png'
-        break
-      case 'stellar':
-        return 'stellar.png'
-        break
-      case 'ripple':
-        return 'ripple.png'
-        break
-      case 'tron':
-        return 'tron.png'
-        break
-      case 'ethereum':
-        return 'ether.png'
-        break
-      default:
-        return 'bitcoin.png'
-        break
-    }
-  }
+
   render() {
     const { name, price_usd } = this.props.coin
 
     return (
       <CoinRow>
         <CoinIcon>
-          <CoinImage src={'/assets/' + this.renderCoinIconPath()} alt="icon" />
+          <CoinImage src={coinIconPath(this.props.coin)} alt="icon" />
         </CoinIcon>
         <CoinName>{name}</CoinName>
         <CoinPrice>${price_usd}</CoinPrice>
