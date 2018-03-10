@@ -11,11 +11,11 @@ class CoinRocket extends Component {
     const {
       isGoingUp,
       progress,
-      coin: { name, moonTarget, price_usd, symbol, percent_change_1h },
+      coin: { name, isMoonTarget, price_usd, symbol, percent_change_1h },
       coin
     } = this.props
     return (
-      <RocketPosition progress={progress}>
+      <RocketPosition progress={progress} isMoonTarget={isMoonTarget}>
         <Rocket onClick={() => console.log('Routa till detail sida')}>
           <RocketHoverIcon>
             <img src={coinIconPath(coin)} alt="coin-icon" />
@@ -60,6 +60,7 @@ const RocketPosition = styled.li`
   transition: 4s all cubic-bezier(0.84, 0.07, 0.43, 1);
   left: ${props => props.progress + '%'};
   position: relative;
+  visibility: ${props => (props.isMoonTarget ? 'hidden' : 'visible')};
 `
 const RocketHoverInfo = styled.div`
   background: #164454b0;

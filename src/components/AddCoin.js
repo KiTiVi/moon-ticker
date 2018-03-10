@@ -5,7 +5,7 @@ import AddCoinItem from './AddCoinItem'
 
 import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
-const VALID_COINS = ['Stellar', 'Ripple', 'Bitcoin', 'Ethereum', 'TRON']
+export const VALID_COINS = ['Stellar', 'Ripple', 'Bitcoin', 'Ethereum', 'TRON']
 
 class AddCoin extends Component {
   renderTableRows = () => {
