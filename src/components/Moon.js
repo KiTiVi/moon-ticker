@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
-
+import {Wiggle} from './animations/Wiggle'
 class Moon extends Component {
   state = { size: null, secretCount: 0, easterEgg: false }
 
@@ -129,7 +129,7 @@ const MoonWrapper = styled.figure.attrs({
   animation: ${({ animated, easterEgg }) =>
     easterEgg
       ? `${easterEggAnimation} 30s linear`
-      : animated ? `${moonWiggle} 4s infinite ease-in-out` : null};
+      : animated ? `${Wiggle} 4s infinite ease-in-out` : null};
 `
 const MoonBody = styled.div`
   position: relative;
@@ -162,17 +162,6 @@ const CraterSmall = Crater.extend`
   box-shadow: inset 4px -2px 0px 0px #404040;
 `
 
-const moonWiggle = keyframes`
-0% {
-transform: translateY(15px);
-}
-50% {
-transform: translateY(-15px);
-}
-100% {
-transform: translateY(15px);
-}
-`
 const easterEggAnimation = keyframes`
 0% {
 transform: translateY(25px);

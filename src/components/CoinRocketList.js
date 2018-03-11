@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Responsive from 'react-responsive'
+import MoonFlagsList from './MoonFlagsList'
 
 import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
@@ -23,6 +24,7 @@ class CoinRocketList extends Component {
     })
 
     return coinList.map(coin => {
+      //if(!coin.isMoonTarget) {
       let percent = Math.round(coin.price_usd * 100) / coin.moonTarget
       let progress = 100 * (percent / 100)
       return (
@@ -30,9 +32,11 @@ class CoinRocketList extends Component {
           key={coin.id}
           isGoingUp={coin.percent_change_1h > 0}
           coin={coin}
-          progress={progress}
+          isMoonTarget={coin.isMoonTarget}
+          progress={coin.isMoonTarget ? 100 : progress}
         />
       )
+      //}
     })
   }
 
@@ -48,6 +52,15 @@ class CoinRocketList extends Component {
               top: 250,
               right: -285
             }}
+          />
+          <MoonFlagsList
+            width={250}
+            flags={this.props.myCoins}
+            position={{
+              top: 250,
+              right: -285
+            }}
+            isMobile={true}
           />
         </Responsive>
       </CoinPath>,

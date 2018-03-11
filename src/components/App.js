@@ -12,12 +12,17 @@ import Background from './Background'
 import Moon from './Moon'
 import Header from './Header'
 import CoinRocketList from './CoinRocketList'
+import MoonFlagsList from './MoonFlagsList'
 
 const SCREEN_ORIENTATION = window.screen.orientation
 
 class App extends Component {
   state = {
     moonPosition: {
+      top: '',
+      left: ''
+    },
+    flagPosition: {
       top: '',
       left: ''
     },
@@ -41,9 +46,16 @@ class App extends Component {
     this.props.history.listen((location, action) => {
       this.setMoonPosition(location.pathname, this.state.isMobile)
     })
-    this.checkLocalStorage()
+    await this.checkLocalStorage()
   }
   checkLocalStorage = async () => {
+    const myCoins = JSON.parse(localStorage.getItem('my-coin-data'))
+    if (myCoins) {
+      this.setState({ myCoins: myCoins })
+    } else {
+      this.props.history.push('/welcome')
+    }
+
     var persistedCoinData = JSON.parse(localStorage.getItem('moon-coin-data'))
     if (persistedCoinData) {
       this.refreshCoinData(persistedCoinData)
@@ -77,7 +89,9 @@ class App extends Component {
       data: [...coinData]
     }
     console.log(coinDataWithTime)
-    this.setState({ coinData: coinDataWithTime })
+    this.setState({ coinData: coinDataWithTime }, () => {
+      this.updateCoins()
+    })
     localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
 
@@ -102,12 +116,20 @@ class App extends Component {
           moonPosition: {
             top: 180,
             left: 'calc(100vw - 400px)'
+          },
+          flagPosition: {
+            top: 180,
+            left: 'calc(100vw - 400px)'
           }
         })
         break
       case '/addcoin':
         this.setState({
           moonPosition: {
+            top: '35vh',
+            left: '10vw'
+          },
+          flagPosition: {
             top: '35vh',
             left: '10vw'
           }
@@ -118,29 +140,65 @@ class App extends Component {
           moonPosition: {
             top: isMobile ? 160 : 'calc(50vh - 310px)',
             left: isMobile ? 1800 : 'calc(100vw - 210px)'
+          },
+          flagPosition: {
+            top: isMobile ? 160 : 'calc(50vh - 310px)',
+            left: isMobile ? 1800 : 'calc(100vw - 250px)'
           }
         })
         break
     }
+  }
+  saveMyCoins = () => {
+    localStorage.setItem('my-coin-data', JSON.stringify(this.state.myCoins))
+  }
+  updateCoins = () => {
+    const myCoins = this.state.myCoins.map(myCoin => {
+      const coin = this.state.coinData.data.find(x => x.id === myCoin.id)
+      const isMoonTarget = this.isMoonTarget(
+        parseFloat(coin.price_usd),
+        myCoin.moonTarget
+      )
+      return { ...coin, moonTarget: myCoin.moonTarget, isMoonTarget }
+    })
+
+    this.setState({ myCoins: myCoins }, () => {
+      this.saveMyCoins()
+    })
+  }
+  isMoonTarget(price, moonTarget) {
+    return price >= moonTarget
   }
   onAddCoin = (coin, moonTarget) => {
     console.log('TACK FÖR COINET', coin, moonTarget)
     let newMyCoins = this.state.myCoins.filter(
       coinItem => coinItem.id !== coin.id
     )
+    const isMoonTarget = this.isMoonTarget(
+      parseFloat(coin.price_usd),
+      moonTarget
+    )
     if (
       this.state.myCoins.filter(coinItem => coinItem.id === coin.id).length > 0
     ) {
-      newMyCoins.push({ ...coin, moonTarget })
-      this.setState(prevState => ({
-        myCoins: newMyCoins
-      }))
-      console.log(this.state.myCoins)
+      newMyCoins.push({ ...coin, moonTarget, isMoonTarget })
+      this.setState(
+        prevState => ({
+          myCoins: newMyCoins
+        }),
+        () => {
+          this.saveMyCoins()
+        }
+      )
     } else {
-      this.setState(prevState => ({
-        myCoins: [...prevState.myCoins, { ...coin, moonTarget }]
-      }))
-      console.log(this.state.myCoins)
+      this.setState(
+        prevState => ({
+          myCoins: [...prevState.myCoins, { ...coin, moonTarget, isMoonTarget }]
+        }),
+        () => {
+          this.saveMyCoins()
+        }
+      )
     }
   }
   toggleAddCoin = () => {
@@ -185,9 +243,21 @@ class App extends Component {
         </Switch>
         <Responsive minWidth={desktop_min}>
           <Moon animated size={550} position={this.state.moonPosition} />
+          <MoonFlagsList
+            width={250}
+            flags={this.state.myCoins}
+            position={this.state.flagPosition}
+            isMobile={false}
+          />
         </Responsive>
         <Responsive maxWidth={mobile_max}>
           <Moon animated size={250} position={this.state.moonPosition} />
+          <MoonFlagsList
+            width={250}
+            flags={this.state.myCoins}
+            position={this.state.flagPosition}
+            isMobile={true}
+          />
         </Responsive>
         <Background />
       </div>
