@@ -90,7 +90,9 @@ class App extends Component {
     }
     console.log(coinDataWithTime)
     this.setState({ coinData: coinDataWithTime }, () => {
-      this.updateCoins()
+      if (this.state.myCoins.length > 0) {
+        this.updateCoins()
+      }
     })
     localStorage.setItem('moon-coin-data', JSON.stringify(coinDataWithTime))
   }
@@ -98,13 +100,9 @@ class App extends Component {
   setIsMobile = async () => {
     if (window.innerWidth <= mobile_max && !this.state.isMobile) {
       await this.setState({ isMobile: true })
-      this.screenOrientation.lock('landscape')
-      console.log(this.screenOrientation)
     }
-
     if (window.innerWidth >= desktop_min && this.state.isMobile) {
       await this.setState({ isMobile: false })
-      this.screenOrientation.unlock()
     }
   }
 
