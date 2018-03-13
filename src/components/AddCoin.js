@@ -69,7 +69,7 @@ const CoinList = styled.ul`
   }
   @media (max-width: ${mobile_max}px) {
     padding: 20px 15px;
-    max-height: 82vh;
+    height: 78vh;
     clip-path: polygon(0 0, 96% 2%, 96% 97%, 5% 97%);
   }
 `

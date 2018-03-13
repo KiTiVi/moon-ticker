@@ -28,7 +28,7 @@ const Logo = styled.h1`
   @media (max-width: ${mobile_max}px) {
     position: relative;
     z-index: 2;
-    font-size: 60px;
+    font-size: 50px;
     padding-top: 20px;
     margin-bottom: 20px;
   }
