@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, NavLink } from 'react-router-dom'
 import axios from 'axios'
 import Responsive from 'react-responsive'
+import styled from 'styled-components'
 
 import '../styles/App.css'
 import { mobile_max, desktop_min } from '../helpers/mediaQueries'
@@ -13,8 +14,6 @@ import Moon from './Moon'
 import Header from './Header'
 import CoinRocketList from './CoinRocketList'
 import MoonFlagsList from './MoonFlagsList'
-
-const SCREEN_ORIENTATION = window.screen.orientation
 
 class App extends Component {
   state = {
@@ -35,8 +34,6 @@ class App extends Component {
     isMobile: null
   }
   async componentDidMount() {
-    this.screenOrientation = SCREEN_ORIENTATION
-
     await this.setIsMobile()
     window.addEventListener('resize', () => {
       this.setIsMobile()
@@ -48,6 +45,7 @@ class App extends Component {
     })
     await this.checkLocalStorage()
   }
+
   checkLocalStorage = async () => {
     const myCoins = JSON.parse(localStorage.getItem('my-coin-data'))
     if (myCoins) {
@@ -65,6 +63,7 @@ class App extends Component {
       this.persistCoinData(data)
     }
   }
+
   refreshCoinData = persistedCoinData => {
     this.setState({ coinData: persistedCoinData }, async () => {
       if (new Date().getTime() >= this.state.coinData.timestamp + 60000 * 5) {
@@ -75,6 +74,7 @@ class App extends Component {
       }
     })
   }
+
   fetchCoinmarketCap = async () => {
     try {
       console.log('fetching coin data')
@@ -83,6 +83,7 @@ class App extends Component {
       throw new Error(error)
     }
   }
+
   persistCoinData = coinData => {
     const coinDataWithTime = {
       timestamp: new Date().getTime(),
@@ -106,7 +107,6 @@ class App extends Component {
     }
   }
 
-  // MINNES KOMMENTAR
   setMoonPosition = (path, isMobile) => {
     switch (path) {
       case '/welcome':
@@ -147,9 +147,11 @@ class App extends Component {
         break
     }
   }
+
   saveMyCoins = () => {
     localStorage.setItem('my-coin-data', JSON.stringify(this.state.myCoins))
   }
+
   updateCoins = () => {
     const myCoins = this.state.myCoins.map(myCoin => {
       const coin = this.state.coinData.data.find(x => x.id === myCoin.id)
@@ -164,9 +166,11 @@ class App extends Component {
       this.saveMyCoins()
     })
   }
+
   isMoonTarget(price, moonTarget) {
     return price >= moonTarget
   }
+
   onAddCoin = (coin, moonTarget) => {
     console.log('TACK FÖR COINET', coin, moonTarget)
     let newMyCoins = this.state.myCoins.filter(
@@ -199,12 +203,14 @@ class App extends Component {
       )
     }
   }
+
   toggleAddCoin = () => {
     this.setState(prevState => ({ showAddCoin: !prevState.showAddCoin }))
   }
+
   render() {
     return (
-      <div className="App">
+      <AppWrapper>
         <Header />
         {this.state.showAddCoin && (
           <AddCoin
@@ -249,18 +255,29 @@ class App extends Component {
           />
         </Responsive>
         <Responsive maxWidth={mobile_max}>
-          <Moon animated size={250} position={this.state.moonPosition} />
-          <MoonFlagsList
-            width={250}
-            flags={this.state.myCoins}
-            position={this.state.flagPosition}
-            isMobile={true}
-          />
+          {this.props.location.pathname === '/'
+            ? null
+            : [
+                <Moon animated size={250} position={this.state.moonPosition} />,
+                <MoonFlagsList
+                  width={250}
+                  flags={this.state.myCoins}
+                  position={this.state.flagPosition}
+                  isMobile={true}
+                />
+              ]}
         </Responsive>
         <Background />
-      </div>
+      </AppWrapper>
     )
   }
 }
 
 export default App
+
+const AppWrapper = styled.div`
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+`
