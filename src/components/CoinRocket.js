@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { desktop_min, mobile_max } from '../helpers/mediaQueries'
 
 import RocketFire from './RocketFire'
 import RocketSmoke from './RocketSmoke'
@@ -58,9 +59,15 @@ transform: translateY(3px);
 `
 const RocketPosition = styled.li`
   transition: 4s all cubic-bezier(0.84, 0.07, 0.43, 1);
-  left: ${props => props.progress + '%'};
   position: relative;
   visibility: ${props => (props.isMoonTarget ? 'hidden' : 'visible')};
+  @media (min-width: ${desktop_min}px) {
+    left: ${props => props.progress + '%'};
+  }
+  @media (max-width: ${mobile_max}px) {
+    left: ${props => 1200 * (props.progress / 100) + 'px'};
+    width: 150px;
+  }
 `
 const RocketHoverInfo = styled.div`
   background: #164454b0;

@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import '../styles/App.css'
 import { mobile_max, desktop_min } from '../helpers/mediaQueries'
 
-import Welcome from './Welcome'
+import WelcomeWindow from './WelcomeWindow'
 import AddCoin from './AddCoin'
 import Background from './Background'
 import Moon from './Moon'
@@ -232,7 +232,7 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/welcome" render={() => <Welcome />} />
+          <Route path="/welcome" render={() => <WelcomeWindow />} />
           <Route
             path="/addcoin"
             render={() => (
@@ -280,4 +280,7 @@ const AppWrapper = styled.div`
   height: 100%;
   width: 100%;
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 `

@@ -50,5 +50,6 @@ const Button = styled.button`
   @media (max-width: ${mobile_max}px) {
     bottom: 10px;
     right: 1px;
+    background: #ffb52cf0;
   }
 `

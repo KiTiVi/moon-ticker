@@ -9,27 +9,32 @@ import CallToActionButton from './CallToActionButton'
 class WelcomeWindow extends React.Component {
   render() {
     return (
-      <WelcomeWindowWrapper>
-        <WelcomeHeader>
-          Track your <OrangeText>Coins!</OrangeText>
-        </WelcomeHeader>
-        <p>
-          This is the Moon Ticker, the perfect tool for tracking your precious
-          coins. The design may not be the most accurate when it comes to view
-          changes in rating. But its humorous way of showing the rates sure help
-          you to endure the dips.
-        </p>
-        <CallToActionButton
-          key="2"
-          title="GET STARTED"
-          callBack={() => this.props.history.push('/addcoin')}
-        />
-      </WelcomeWindowWrapper>
+      <PositionHelper>
+        <WelcomeWindowWrapper>
+          <WelcomeHeader>
+            Track your <OrangeText>Coins!</OrangeText>
+          </WelcomeHeader>
+          <p>
+            Enter your target rate and track your coins journey to the Moon!
+          </p>
+          <CallToActionButton
+            key="2"
+            title="GET STARTED"
+            callBack={() => this.props.history.push('/addcoin')}
+          />
+        </WelcomeWindowWrapper>
+      </PositionHelper>
     )
   }
 }
 
 export default withRouter(WelcomeWindow)
+
+const PositionHelper = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+`
 
 const WelcomeWindowWrapper = styled.div`
   display: flex;

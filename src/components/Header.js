@@ -30,6 +30,6 @@ const Logo = styled.h1`
     z-index: 2;
     font-size: 50px;
     padding-top: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
 `
