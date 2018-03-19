@@ -23,12 +23,13 @@ class CoinRocketList extends Component {
       return 1
     })
 
-    return coinList.map(coin => {
+    return coinList.map((coin, index) => {
       //if(!coin.isMoonTarget) {
       let percent = Math.round(coin.price_usd * 100) / coin.moonTarget
       let progress = 100 * (percent / 100)
       return (
         <CoinRocket
+          index={index}
           key={coin.id}
           isGoingUp={coin.percent_change_1h > 0}
           coin={coin}

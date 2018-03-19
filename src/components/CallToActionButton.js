@@ -40,16 +40,19 @@ const Button = styled.button`
   font-size: 20px;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
   position: ${({ isAbsolute }) => (isAbsolute ? 'absolute' : null)};
-  width: 200px;
-  height: 80px;
+
   z-index: 2;
   @media (min-width: ${desktop_min}px) {
     bottom: 30px;
     right: 30px;
+    width: 200px;
+    height: 80px;
   }
   @media (max-width: ${mobile_max}px) {
     bottom: 10px;
     right: 1px;
     background: #ffb52cf0;
+    width: 180px;
+    height: 70px;
   }
 `

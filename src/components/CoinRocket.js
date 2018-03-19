@@ -9,19 +9,24 @@ import coinIconPath from '../helpers/coinIconPath'
 
 class CoinRocket extends Component {
   render() {
+    console.log('crocket props', this.props)
     const {
       isGoingUp,
       progress,
+      index,
       coin: { name, isMoonTarget, price_usd, symbol, percent_change_1h },
       coin
     } = this.props
+    console.log(index)
+    const isFirst = index === 0 ? true : false
+    console.log(isFirst)
     return (
       <RocketPosition progress={progress} isMoonTarget={isMoonTarget}>
         <Rocket onClick={() => console.log('Routa till detail sida')}>
-          <RocketHoverIcon>
+          <RocketHoverIcon isFirst={index == 0 ? true : false}>
             <img src={coinIconPath(coin)} alt="coin-icon" />
           </RocketHoverIcon>
-          <RocketHoverInfo>
+          <RocketHoverInfo isFirst={index == 0 ? true : false}>
             <h4>{name}</h4>
             <p>${price_usd}</p>
             <p>{percent_change_1h}%</p>
@@ -32,7 +37,7 @@ class CoinRocket extends Component {
               {!isGoingUp && <RocketSmoke />}
               <RocketBody
                 isGoingUp={isGoingUp}
-                src={'/assets/rocket.png'}
+                src={'./assets/rocket.png'}
                 alt="rocket"
               />
               <RocketTag isGoingUp={isGoingUp}>{symbol}</RocketTag>
@@ -77,7 +82,7 @@ const RocketHoverInfo = styled.div`
   z-index: 1;
   position: absolute;
   visibility: hidden;
-  top: -110px;
+  top: ${props => (props.isFirst ? '40px' : '-90px')};
   clip-path: polygon(0 0, 98% 9%, 98% 98%, 4% 100%);
   padding: 10px;
   display: flex;
@@ -113,7 +118,7 @@ const RocketHoverIcon = styled.figure`
   overflow: hidden;
   visibility: hidden;
   position: absolute;
-  top: -132px;
+  top: ${props => (props.isFirst ? '20px' : '-112px')};
   left: -16px;
   z-index: 2;
   img {
