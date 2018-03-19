@@ -22,11 +22,11 @@ const Background = styled.div`
   display: block;
 `
 const Stars = Background.extend`
-  background: #000 url(/assets/stars.png) repeat top center;
+  background: #000 url(./assets/stars.png) repeat top center;
   z-index: -1;
 `
 const Twinkling = Background.extend`
-  background: transparent url(/assets/twinkling.png) repeat top center;
+  background: transparent url(./assets/twinkling.png) repeat top center;
   animation: ${`${MoveTwinkBack} 400s linear infinite`};
   z-index: -1;
 `
